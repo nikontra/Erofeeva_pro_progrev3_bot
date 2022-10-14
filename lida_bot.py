@@ -1,3 +1,4 @@
+from threading import TIMEOUT_MAX
 import lida_bot_texts
 import os
 # from subprocess import Popen, PIPE
@@ -19,7 +20,8 @@ load_dotenv()
 
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 OWNER_ID = os.getenv('OWNER_ID')
-TIMEOUT = 300
+TIMEOUT_1 = 300
+TIMEOUT_2 = 1800
 
 CALLBACK_BUTTON1_READY = "callback_button1_ready"
 CALLBACK_BUTTON2_YES = "callback_button2_yes"
@@ -92,7 +94,7 @@ def time_message_2(context: CallbackContext):
 
 def job_time_message(context, chat_id, timer):
     """Создает задание - отправить сообщение через временной интервал"""
-    timeout = TIMEOUT
+    timeout = TIMEOUT_1 if timer == 1 else TIMEOUT_2 
     job = context.job_queue.run_once(
         callback=time_message_1 if timer == 1 else time_message_2,
         when=timeout,
