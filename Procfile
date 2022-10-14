@@ -1,0 +1,1 @@
+worker: python lida_bot.py
